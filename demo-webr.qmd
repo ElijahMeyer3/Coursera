@@ -1,0 +1,60 @@
+---
+title: "AE 01: Bechdel + data visualization"
+author: "Insert name"
+format: html
+editor: visual
+filters: 
+  - webr
+webr:
+  packages: ['tidyverse', 'scales']
+  home-dir: "/Documents/Repos/Coursera/data"
+
+---
+
+In this mini analysis we work with the data used in the FiveThirtyEight story titled ["The Dollar-And-Cents Case Against Hollywood's Exclusion of Women"](https://fivethirtyeight.com/features/the-dollar-and-cents-case-against-hollywoods-exclusion-of-women/).
+
+This analysis is about the [Bechdel test](https://en.wikipedia.org/wiki/Bechdel_test), a measure of the representation of women in fiction.
+
+## Getting started
+
+### Packages
+
+We start with loading the packages we'll use: **tidyverse** for majority of the analysis and **scales** for pretty plot labels later on.
+
+```{webr-r}
+#| label: load-packages
+#| warning: false
+
+library(tidyverse)
+library(scales)
+```
+
+### Data
+
+The data are stored as a CSV (comma separated values) file in the `data` folder of your repository.
+Let's read it from there and save it as an object called `bechdel`.
+
+```{webr-r}
+#| label: read-data
+#| message: false
+
+bechdel <- read_csv("bechdel.csv")
+```
+
+::: callout-note
+This a modified version of the `bechdel` dataset from the previous application exercise.
+It's been modified to include some new variables derived from existing variables as well as to limit the scope of the data to movies released between 1990 and 2013.
+For now we're not going to discuss how these modifications were made (that's next week's topic) but if you're curious, you can find the data prep script in the `data/` folder of your repo.
+Don't spend too long trying to decipher it, wait till next week when you have the right tools to do so!
+:::
+
+### Get to know the data
+
+We can use the `glimpse` function to get an overview (or "glimpse") of the data.
+
+```{webr-r}
+
+# add code here
+
+```
+
