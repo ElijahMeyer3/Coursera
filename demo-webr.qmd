@@ -7,9 +7,31 @@ filters:
   - webr
 webr:
   packages: ['tidyverse', 'scales']
-  home-dir: "/Documents/Repos/Coursera/data"
-
 ---
+
+```{webr-r}
+#| context: setup
+download.file(
+  "https://raw.githubusercontent.com/ElijahMeyer3/Coursera/main/data/bechdel.csv",
+  "bechdel.csv"
+)
+```
+
+```{r}
+#| echo: false
+#| context: setup
+
+download.file(
+  "https://raw.githubusercontent.com/ElijahMeyer3/Coursera/main/data/bechdel.csv",
+  "bechdel.csv"
+)
+```
+
+```{r}
+#| echo: false
+bechdel <- read.csv("bechdel.csv")
+```
+
 
 In this mini analysis we work with the data used in the FiveThirtyEight story titled ["The Dollar-And-Cents Case Against Hollywood's Exclusion of Women"](https://fivethirtyeight.com/features/the-dollar-and-cents-case-against-hollywoods-exclusion-of-women/).
 
@@ -34,11 +56,11 @@ library(scales)
 The data are stored as a CSV (comma separated values) file in the `data` folder of your repository.
 Let's read it from there and save it as an object called `bechdel`.
 
-```{webr-r}
-#| label: read-data
-#| message: false
 
-bechdel <- read_csv("bechdel.csv")
+
+```{webr-r}
+#| label: load-data
+bechdel <- read.csv("bechdel.csv")
 ```
 
 ::: callout-note
@@ -58,3 +80,319 @@ We can use the `glimpse` function to get an overview (or "glimpse") of the data.
 
 ```
 
+With your output, confirm that: 
+
+-- There are  movies in the dataset
+
+-- There are  variables (columns) in the dataset
+
+
+What does each observation (row) in the data set represent?
+
+<label>Answer:</label>
+<br>
+<textarea rows="4" cols="50">
+</textarea><br><br>
+
+
+::: {.callout-tip collapse="true"}
+## Solution
+Each observation represents a **movie**.
+:::
+
+## Variables of Interest 
+
+The variables we'll focus on are the following:
+
+-   `budget_2013`: Budget in 2013 inflation adjusted dollars.
+-   `gross_2013`: Gross (US and international combined) in 2013 inflation adjusted dollars.
+-   `roi`: Return on investment, calculated as the ratio of the gross to budget.
+-   `clean_test`: Bechdel test result:
+    -   `ok` = passes test
+    -   `dubious`
+    -   `men` = women only talk about men
+    -   `notalk` = women don't talk to each other
+    -   `nowomen` = fewer than two women
+-   `binary`: Bechdel Test PASS vs FAIL binary
+
+We will also use the `year` of release in data prep and `title` of movie to take a deeper look at some outliers.
+
+There are a few other variables in the dataset, but we won't be using them in this analysis.
+
+## Visualizing data with `ggplot2`
+
+**ggplot2** is the package and `ggplot()` is the function in this package that is used to create a plot.
+
+-   `ggplot()` creates the initial base coordinate system, and we will add layers to that base. We first specify the data set we will use with `data = bechdel`.
+
+```{webr-r}
+#| label: plot-base
+ggplot(data = bechdel)
+```
+
+-   The `mapping` argument is paired with an aesthetic (`aes()`), which tells us how the variables in our data set should be mapped to the visual properties of the graph.
+
+```{webr-r}
+#| label: plot-aesthetic-mapping
+ggplot(data = bechdel, 
+       mapping = aes(x = budget_2013, y = gross_2013))
+```
+
+As we previously mentioned, we often omit the names of the first two arguments in R functions.
+So you'll often see this written as:
+
+```{webr-r}
+#| label: plot-simplified-call
+ggplot(bechdel, 
+       aes(x = budget_2013, y = gross_2013))
+```
+
+Note that the result is exactly the same.
+
+-   The `geom_xx` function specifies the type of plot we want to use to represent the data. In the code below, we use `geom_point` which creates a plot where each observation is represented by a point.
+
+```{webr-r}
+#| label: plot-point
+ggplot(bechdel, 
+       aes(x = budget_2013, y = gross_2013)) +
+       # type geom_point() here!
+```
+
+
+
+::: {.callout-tip collapse="true"}
+## Expected Result
+
+```{r}
+#| echo: false
+library(ggplot2)
+ggplot(bechdel, 
+       aes(x = budget_2013, y = gross_2013)) +
+       geom_point()
+```
+:::
+
+Note that this results in a warning as well. 
+
+This warning represents the number of observations that were removed because there were missing data!
+
+## Gross revenue vs. budget
+
+### Step 1 - Your turn
+
+The following code changes the color of all points to coral. Explore different colors by changing "coral" to different colors!
+
+::: callout-tip
+See <http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf> for many color options you can use by name in R or use the [hex code](https://en.wikipedia.org/wiki/Web_colors) for a color of your choice.
+:::
+
+```{webr-r}
+#| label: plot-point-color
+
+ggplot(bechdel, 
+       aes(x = budget_2013, y = gross_2013)) +
+  geom_point(color = "coral") 
+```
+
+### Step 2 - Your turn
+
+Add labels for the title and x and y axes using [labs](https://ggplot2.tidyverse.org/reference/labs.html). Do this by modifying the existing code below.
+
+```{webr-r}
+#| label: plot-labs
+
+ggplot(bechdel, 
+       aes(x = budget_2013, y = gross_2013)) +
+  geom_point(color = "coral") + 
+  # insert code here
+```
+
+::: {.callout-tip collapse="true"}
+## Expected Result
+```{r}
+#| label: plot-labels
+
+ggplot(bechdel, 
+       aes(x = budget_2013, y = gross_2013))+
+  geom_point(color = "deepskyblue3") + 
+  labs(
+    x = "Budget (in 2013 $)", 
+    y = "Gross revenue (in 2013 $)", 
+    title = "Gross revenue vs. budget"
+    )
+```
+:::
+
+### Step 3 - Your turn
+
+An `aes`thetic is a visual property of one of the objects in your plot.
+Commonly used aesthetic options are:
+
+-   color
+-   fill
+-   shape
+-   size
+-   alpha (transparency)
+
+Modify the plot below, so the `color` of the points is based on the variable `binary`, and make the size of your points based on `roi`. 
+
+
+```{webr-r}
+#| label: plot-aes-color
+
+ggplot(bechdel, 
+       aes(x = budget_2013, y = gross_2013)) +
+  geom_point() + 
+  labs(
+    x = "Budget (in 2013 $)", 
+    y = "Gross revenue (in 2013 $)", 
+    title = "Gross revenue vs. budget, by Bechdel test result"
+    )
+```
+
+::: {.callout-tip collapse="true"}
+## Expected Result
+```{r}
+#| label: plot-aes-color-solution
+
+ggplot(bechdel, 
+       aes(x = budget_2013, y = gross_2013,
+           color = binary, size = roi)) +
+  geom_point() + 
+  labs(
+    x = "Budget (in 2013 $)", 
+    y = "Gross revenue (in 2013 $)", 
+    title = "Gross revenue vs. budget, by Bechdel test result"
+    )
+```
+:::
+
+### Step 4 - Your turn
+
+Expand on your plot from the previous step to make the transparency (`alpha`) of the points 0.5.
+
+```{webr-r}
+#| label: plot-aes-alpha
+
+ggplot(bechdel, 
+       aes(x = budget_2013, y = gross_2013,
+           color = binary, size = roi)) +
+  geom_point(alpha = #insert 0.5 here) + 
+  labs(
+    x = "Budget (in 2013 $)", 
+    y = "Gross revenue (in 2013 $)", 
+    title = "Gross revenue vs. budget, by Bechdel test result"
+    )
+```
+
+### Step 5 - Your turn
+
+Expand on your plot from the previous step by using `facet_wrap` to display the association between budget and gross for different values of `clean_test`.
+
+```{webr-r}
+#| label: plot-facet-wrap
+
+ggplot(bechdel, 
+       aes(x = budget_2013, y = gross_2013,
+           color = binary, size = roi)) +
+  geom_point(alpha = 0.5) + 
+  facet_wrap(~#insert variable here) +
+  labs(
+    x = "Budget (in 2013 $)", 
+    y = "Gross revenue (in 2013 $)", 
+    title = "Gross revenue vs. budget, by Bechdel test result"
+    )
+```
+
+### Step 6 - Demo
+
+Improve your plot from the previous step by making the x and y scales more legible.
+
+::: callout-tip
+Make use of the [**scales**](https://scales.r-lib.org/) package, specifically the `scale_x_continuous()` and `scale_y_continuous()` functions.
+:::
+
+```{r}
+#| label: plot-scales
+
+library(scales)
+
+ggplot(bechdel, 
+       aes(x = budget_2013, y = gross_2013,
+           color = binary, size = roi)) +
+  geom_point(alpha = 0.5) + 
+  facet_wrap(~clean_test) +
+  scale_x_continuous(labels = label_dollar(scale = 1/1000000)) +
+  scale_y_continuous(labels = label_dollar(scale = 1/1000000)) +
+  labs(
+    x = "Budget (in 2013 $)", 
+    y = "Gross revenue (in 2013 $)", 
+    title = "Gross revenue vs. budget, by Bechdel test result"
+    )
+```
+
+### Step 7 - Your turn
+
+Expand on your plot from the previous step by using `facet_grid` to display the association between budget and gross for different combinations of `clean_test` and `binary`.
+Comment on whether this was a useful update.
+
+```{webr-r}
+#| label: plot-facet-grid
+
+ggplot(bechdel, 
+       aes(x = budget_2013, y = gross_2013,
+           color = binary, size = roi)) +
+  geom_point(alpha = 0.5) + 
+  facet_grid(#insert variable name1 ~ insert variable name2) +
+  scale_x_continuous(labels = label_dollar(scale = 1/1000000)) +
+  scale_y_continuous(labels = label_dollar(scale = 1/1000000)) +
+  labs(
+    x = "Budget (in 2013 $)", 
+    y = "Gross revenue (in 2013 $)", 
+    title = "Gross revenue vs. budget, by Bechdel test result"
+    )
+```
+
+Is this type of facet useful? Why or why not?
+
+<label>Answer:</label>
+<br>
+<textarea rows="4" cols="50">
+</textarea><br><br>
+
+::: {.callout-tip collapse="true"}
+## Solution
+This was not a useful update as one of the levels of `clean_test` maps directly to one of the levels of `binary`.
+:::
+
+## Step 8 - Demo 
+
+What other improvements could we make to this plot?
+
+<label>Answer:</label>
+<br>
+<textarea rows="4" cols="50">
+</textarea><br><br>
+
+::: {.callout-tip collapse="true"}
+## Solution
+We could make the plot better by... 
+
+- 
+
+- 
+
+-
+:::
+
+```{webr-r}
+#| label: plot-improve
+
+# Answers may vary
+```
+
+
+## Assessment Questions 
+
+
+ 
