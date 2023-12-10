@@ -1,13 +1,27 @@
 ---
-title: "AE 01: Bechdel + data visualization"
-author: "Insert name"
+title: "Bechdel + data visualization"
+author: ""
 format: html
+toc: true
+self-contained: true
 editor: visual
 filters: 
   - webr
 webr:
   packages: ['tidyverse', 'scales']
 ---
+
+# Programming Activity Key 
+
+This activity is meant to provide an interactive environment for students to implement what they have learned from the videos. Question types include the following: 
+
+-- **Text Box**: A space for students to write down answers to open ended questions. These questions are followed by a `Solutions` tab to reveal the answer. 
+
+-- **Your Turn**: These coding questions ask students to explore / edit / manipulate existing to code. These questions are followed with an `Expected Solutions` box so students can get immediate feedback
+
+-- **Demo**: These coding questions have the solutions within them and allow the students to run the code and make connections.
+
+## Getting started
 
 ```{webr-r}
 #| context: setup
@@ -37,16 +51,15 @@ In this mini analysis we work with the data used in the FiveThirtyEight story ti
 
 This analysis is about the [Bechdel test](https://en.wikipedia.org/wiki/Bechdel_test), a measure of the representation of women in fiction.
 
-## Getting started
 
 ### Packages
 
-We start with loading the packages we'll use: **tidyverse** for majority of the analysis and **scales** for pretty plot labels later on.
+We'll use: **tidyverse** for majority of the analysis and **scales** for pretty plot labels later on. These are ready to use for you in this activity!
 
-```{webr-r}
+```{r}
 #| label: load-packages
+#| message: false
 #| warning: false
-
 library(tidyverse)
 library(scales)
 ```
@@ -57,7 +70,6 @@ The data are stored as a CSV (comma separated values) file in the `data` folder 
 Let's read it from there and save it as an object called `bechdel`.
 
 
-
 ```{webr-r}
 #| label: load-data
 bechdel <- read.csv("bechdel.csv")
@@ -66,26 +78,28 @@ bechdel <- read.csv("bechdel.csv")
 ::: callout-note
 This a modified version of the `bechdel` dataset from the previous application exercise.
 It's been modified to include some new variables derived from existing variables as well as to limit the scope of the data to movies released between 1990 and 2013.
-For now we're not going to discuss how these modifications were made (that's next week's topic) but if you're curious, you can find the data prep script in the `data/` folder of your repo.
-Don't spend too long trying to decipher it, wait till next week when you have the right tools to do so!
 :::
 
 ### Get to know the data
 
-We can use the `glimpse` function to get an overview (or "glimpse") of the data.
+We can use the `glimpse` function to get an overview (or "glimpse") of the data. Write the following code below to accomplish this task.
 
 ```{webr-r}
-
 # add code here
 
 ```
 
 With your output, confirm that: 
 
--- There are  movies in the dataset
+-- There are 1615 rows
 
--- There are  variables (columns) in the dataset
+-- There are 7 variables (columns) in the dataset
 
+We can use `slice` to look at rows of our data. Run the following code. Change the `5` to another number to print that many rows!
+
+```{webr-r}
+slice(bechdel, 1:5)
+```
 
 What does each observation (row) in the data set represent?
 
@@ -121,7 +135,7 @@ There are a few other variables in the dataset, but we won't be using them in th
 
 ## Visualizing data with `ggplot2`
 
-**ggplot2** is the package and `ggplot()` is the function in this package that is used to create a plot.
+**ggplot2** is the package and `ggplot()` is the function in this package that is used to create a plot. Interact with the code below by either running the code given, or adding code to achieve the expected solution when asked within the code chunk!
 
 -   `ggplot()` creates the initial base coordinate system, and we will add layers to that base. We first specify the data set we will use with `data = bechdel`.
 
@@ -155,7 +169,7 @@ Note that the result is exactly the same.
 #| label: plot-point
 ggplot(bechdel, 
        aes(x = budget_2013, y = gross_2013)) +
-       # type geom_point() here!
+  # type geom_point() here!
 ```
 
 
@@ -168,7 +182,7 @@ ggplot(bechdel,
 library(ggplot2)
 ggplot(bechdel, 
        aes(x = budget_2013, y = gross_2013)) +
-       geom_point()
+  geom_point()
 ```
 :::
 
@@ -293,8 +307,8 @@ Expand on your plot from the previous step by using `facet_wrap` to display the 
 #| label: plot-facet-wrap
 
 ggplot(bechdel, 
-       aes(x = budget_2013, y = gross_2013,
-           color = binary, size = roi)) +
+  aes(x = budget_2013, y = gross_2013,
+    color = binary, size = roi)) +
   geom_point(alpha = 0.5) + 
   facet_wrap(~#insert variable here) +
   labs(
@@ -306,20 +320,20 @@ ggplot(bechdel,
 
 ### Step 6 - Demo
 
-Improve your plot from the previous step by making the x and y scales more legible.
+Below is a demonstration on how to improve your plot from the previous step by making the x and y scales more legible.
 
 ::: callout-tip
-Make use of the [**scales**](https://scales.r-lib.org/) package, specifically the `scale_x_continuous()` and `scale_y_continuous()` functions.
+This is done through the use of the [**scales**](https://scales.r-lib.org/) package, specifically the `scale_x_continuous()` and `scale_y_continuous()` functions.
 :::
 
-```{r}
+```{webr-r}
 #| label: plot-scales
 
 library(scales)
 
 ggplot(bechdel, 
-       aes(x = budget_2013, y = gross_2013,
-           color = binary, size = roi)) +
+  aes(x = budget_2013, y = gross_2013,
+    color = binary, size = roi)) +
   geom_point(alpha = 0.5) + 
   facet_wrap(~clean_test) +
   scale_x_continuous(labels = label_dollar(scale = 1/1000000)) +
@@ -365,34 +379,66 @@ Is this type of facet useful? Why or why not?
 This was not a useful update as one of the levels of `clean_test` maps directly to one of the levels of `binary`.
 :::
 
-## Step 8 - Demo 
+## Assessment Questions 
 
-What other improvements could we make to this plot?
+1. Fill in the blanks:
 
-<label>Answer:</label>
-<br>
-<textarea rows="4" cols="50">
-</textarea><br><br>
+The gg in the name of the package ggplot2 stands for ___. 
 
-::: {.callout-tip collapse="true"}
-## Solution
-We could make the plot better by... 
+If you map the same continuous variable to both x and y aesthetics in a scatterplot, you get a 
+straight ___ line. (Choose between “vertical”, “horizontal”, or “diagonal”.) 
 
-- 
-
-- 
-
--
-:::
+2. Code style: Fix up the code style by spaces and line breaks where needed. Briefly describe your fixes. (Hint: You can refer to the Tidyverse style guide.)
 
 ```{webr-r}
-#| label: plot-improve
-
-# Answers may vary
+ggplot(data=mpg,mapping=aes(x=drv,fill=class))+geom_bar() +scale_fill_viridis_d()
 ```
 
 
-## Assessment Questions 
+3. In your own words, define the functionality of the following: 
+
+-- <- 
+
+-- ggplot()
+
+-- aes 
+
+4. Reference the help file of the `mtcars` data set. Then fill in the following `...` to make a scatterplot of cars' `miles per gallon` on the x-axis and their `weight (1000lbs)` below.
+```{webr-r}
+ggplot(mtcars) + 
+  aes(x = ... , y = ...) + 
+  geom_...()
+```
+
+5. Connect the set of variables with a geom that will create an appropriate visualization.
+
+:::: {.columns}
+
+::: {.column width="70%"}
+1. Quantitative X & Quantitative Y 
+
+2. Categorical X & Quantitative Y
+
+3. Categorical X 
+
+:::
+
+::: {.column width="10%"}
+<!-- empty column to create gap -->
+:::
+
+::: {.column width="20%"}
+
+a. geom_boxplot()
+
+b. geom_point()
+
+c. geom_bar()
+:::
+
+::::
+
+
 
 
  
