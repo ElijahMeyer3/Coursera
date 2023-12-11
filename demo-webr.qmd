@@ -5,17 +5,19 @@ format: html
 toc: true
 self-contained: true
 editor: visual
+markdown: 
+  wrap: sentence
 filters: 
   - webr
 webr:
   packages: ['tidyverse', 'scales']
 ---
 
-# Programming Activity Key 
+# Programming Activity Key
 
-This activity is meant to provide an interactive environment for students to implement what they have learned from the videos. Question types include the following: 
+This activity is meant to provide an interactive environment for students to implement what they have learned from the videos. Question types include the following:
 
--- **Text Box**: A space for students to write down answers to open ended questions. These questions are followed by a `Solutions` tab to reveal the answer. 
+-- **Text Box**: A space for students to write down answers to open ended questions. These questions are followed by a `Solutions` tab to reveal the answer.
 
 -- **Your Turn**: These coding questions ask students to explore / edit / manipulate existing to code. These questions are followed with an `Expected Solutions` box so students can get immediate feedback
 
@@ -46,11 +48,9 @@ download.file(
 bechdel <- read.csv("bechdel.csv")
 ```
 
-
 In this mini analysis we work with the data used in the FiveThirtyEight story titled ["The Dollar-And-Cents Case Against Hollywood's Exclusion of Women"](https://fivethirtyeight.com/features/the-dollar-and-cents-case-against-hollywoods-exclusion-of-women/).
 
 This analysis is about the [Bechdel test](https://en.wikipedia.org/wiki/Bechdel_test), a measure of the representation of women in fiction.
-
 
 ### Packages
 
@@ -66,9 +66,7 @@ library(scales)
 
 ### Data
 
-The data are stored as a CSV (comma separated values) file in the `data` folder of your repository.
-Let's read it from there and save it as an object called `bechdel`.
-
+The data are stored as a CSV (comma separated values) file in the `data` folder of your repository. Let's read it from there and save it as an object called `bechdel`.
 
 ```{webr-r}
 #| label: load-data
@@ -76,8 +74,7 @@ bechdel <- read.csv("bechdel.csv")
 ```
 
 ::: callout-note
-This a modified version of the `bechdel` dataset from the previous application exercise.
-It's been modified to include some new variables derived from existing variables as well as to limit the scope of the data to movies released between 1990 and 2013.
+This a modified version of the `bechdel` dataset from the previous application exercise. It's been modified to include some new variables derived from existing variables as well as to limit the scope of the data to movies released between 1990 and 2013.
 :::
 
 ### Get to know the data
@@ -89,7 +86,7 @@ We can use the `glimpse` function to get an overview (or "glimpse") of the data.
 
 ```
 
-With your output, confirm that: 
+With your output, confirm that:
 
 -- There are 1615 rows
 
@@ -103,18 +100,21 @@ slice(bechdel, 1:5)
 
 What does each observation (row) in the data set represent?
 
-<label>Answer:</label>
-<br>
-<textarea rows="4" cols="50">
-</textarea><br><br>
+<label>Answer:</label> <br>
 
+```{=html}
+<textarea rows="4" cols="50">
+</textarea>
+```
+<br><br>
 
 ::: {.callout-tip collapse="true"}
 ## Solution
+
 Each observation represents a **movie**.
 :::
 
-## Variables of Interest 
+## Variables of Interest
 
 The variables we'll focus on are the following:
 
@@ -152,8 +152,7 @@ ggplot(data = bechdel,
        mapping = aes(x = budget_2013, y = gross_2013))
 ```
 
-As we previously mentioned, we often omit the names of the first two arguments in R functions.
-So you'll often see this written as:
+As we previously mentioned, we often omit the names of the first two arguments in R functions. So you'll often see this written as:
 
 ```{webr-r}
 #| label: plot-simplified-call
@@ -172,8 +171,6 @@ ggplot(bechdel,
   # type geom_point() here!
 ```
 
-
-
 ::: {.callout-tip collapse="true"}
 ## Expected Result
 
@@ -186,7 +183,7 @@ ggplot(bechdel,
 ```
 :::
 
-Note that this results in a warning as well. 
+Note that this results in a warning as well.
 
 This warning represents the number of observations that were removed because there were missing data!
 
@@ -223,6 +220,7 @@ ggplot(bechdel,
 
 ::: {.callout-tip collapse="true"}
 ## Expected Result
+
 ```{r}
 #| label: plot-labels
 
@@ -239,8 +237,7 @@ ggplot(bechdel,
 
 ### Step 3 - Your turn
 
-An `aes`thetic is a visual property of one of the objects in your plot.
-Commonly used aesthetic options are:
+An `aes`thetic is a visual property of one of the objects in your plot. Commonly used aesthetic options are:
 
 -   color
 -   fill
@@ -248,8 +245,7 @@ Commonly used aesthetic options are:
 -   size
 -   alpha (transparency)
 
-Modify the plot below, so the `color` of the points is based on the variable `binary`, and make the size of your points based on `roi`. 
-
+Modify the plot below, so the `color` of the points is based on the variable `binary`, and make the size of your points based on `roi`.
 
 ```{webr-r}
 #| label: plot-aes-color
@@ -266,6 +262,7 @@ ggplot(bechdel,
 
 ::: {.callout-tip collapse="true"}
 ## Expected Result
+
 ```{r}
 #| label: plot-aes-color-solution
 
@@ -347,8 +344,7 @@ ggplot(bechdel,
 
 ### Step 7 - Your turn
 
-Expand on your plot from the previous step by using `facet_grid` to display the association between budget and gross for different combinations of `clean_test` and `binary`.
-Comment on whether this was a useful update.
+Expand on your plot from the previous step by using `facet_grid` to display the association between budget and gross for different combinations of `clean_test` and `binary`. Comment on whether this was a useful update.
 
 ```{webr-r}
 #| label: plot-facet-grid
@@ -369,58 +365,54 @@ ggplot(bechdel,
 
 Is this type of facet useful? Why or why not?
 
-<label>Answer:</label>
-<br>
+<label>Answer:</label> <br>
+
+```{=html}
 <textarea rows="4" cols="50">
-</textarea><br><br>
+</textarea>
+```
+<br><br>
 
 ::: {.callout-tip collapse="true"}
 ## Solution
+
 This was not a useful update as one of the levels of `clean_test` maps directly to one of the levels of `binary`.
 :::
 
-## Assessment Questions 
+## Assessment Questions
 
-1. Fill in the blanks:
+**1.**  The gg in the name of the package ggplot2 stands for ...
 
-The gg in the name of the package ggplot2 stands for ___. 
+**Options**
 
-If you map the same continuous variable to both x and y aesthetics in a scatterplot, you get a 
-straight ___ line. (Choose between “vertical”, “horizontal”, or “diagonal”.) 
+a. Grammar of Graphics 
 
-2. Code style: Fix up the code style by spaces and line breaks where needed. Briefly describe your fixes. (Hint: You can refer to the Tidyverse style guide.)
+b. Grammar of Graphing 
 
-```{webr-r}
-ggplot(data=mpg,mapping=aes(x=drv,fill=class))+geom_bar() +scale_fill_viridis_d()
-```
+c. Good Grammar 
+
+d. Generate Graphics  
 
 
-3. In your own words, define the functionality of the following: 
+**2.**  Please answer each *true or false question* below as it relates to the functionality.
 
--- <- 
 
--- ggplot()
+a. The `<-` assigns the value of the result from the operation on the right hand side to the object on the left hand side 
 
--- aes 
+b. `geom_jitter` and `geom_point` will produce the same scatter plot. 
 
-4. Reference the help file of the `mtcars` data set. Then fill in the following `...` to make a scatterplot of cars' `miles per gallon` on the x-axis and their `weight (1000lbs)` below.
-```{webr-r}
-ggplot(mtcars) + 
-  aes(x = ... , y = ...) + 
-  geom_...()
-```
+c. `aes` can be nested within `ggplot` or specific geom functions (ex. `geom_line`)  
 
-5. Connect the set of variables with a geom that will create an appropriate visualization.
 
-:::: {.columns}
+**3.**  Connect the set of variables with a geom that will create an appropriate visualization.
 
+::: columns
 ::: {.column width="70%"}
-1. Quantitative X & Quantitative Y 
+1.  Quantitative X & Quantitative Y
 
-2. Categorical X & Quantitative Y
+2.  Categorical X & Quantitative Y
 
-3. Categorical X 
-
+3.  Categorical X
 :::
 
 ::: {.column width="10%"}
@@ -428,17 +420,92 @@ ggplot(mtcars) +
 :::
 
 ::: {.column width="20%"}
+a.  geom_boxplot()
 
-a. geom_boxplot()
+b.  geom_point()
 
-b. geom_point()
-
-c. geom_bar()
+c.  geom_bar()
+:::
 :::
 
-::::
+The next two questions will use the `mtcars` data set in R. A key to the data set can be found below:
+
+| Variable | Description                              |
+|----------|------------------------------------------|
+| mpg      | Miles/(US) gallon                        |
+| cyl      | Number of cylinders                      |
+| disp     | Displacement (cu.in.)                    |
+| hp       | Gross horsepower                         |
+| drat     | Rear axle ratio                          |
+| wt       | Weight (1000 lbs)                        |
+| qsec     | 1/4 mile time                            |
+| vs       | Engine (0 = V-shaped, 1 = straight)      |
+| am       | Transmission (0 = automatic, 1 = manual) |
+| gear     | Number of forward gears                  |
+
+**4.**  Code style: Below is code that does not follow the [Tidyverse style guide](https://style.tidyverse.org/). Pick the correction option that changes the code to adhere to the style guide.
+
+```{r}
+ggplot(data=mpg,mapping=aes(x=drv,fill=class))+geom_bar() +scale_fill_viridis_d()
+```
+
+**Options**
+
+a. 
+```{r}
+ggplot(mpg, aes(x = drv, fill = class)) + 
+  geom_bar() + 
+  scale_fill_viridis_d()
+```
+
+b. 
+```{r}
+ggplot(data=mpg, aes(x = drv, fill = class)) + 
+  geom_bar() + scale_fill_viridis_d()
+```
+
+c. 
+```{r}
+ggplot(mpg, aes(x = drv, fill = class))+ 
+geom_bar()+ 
+scale_fill_viridis_d()
+```
 
 
+**5.**  Reference the help file of the `mtcars` data set. Then, choose the selection that fill in the following `...` to make a scatterplot of cars' `miles per gallon` on the x-axis and their `weight below.
 
+```{r}
+ggplot(mtcars) + 
+  aes(x = ... , y = ...) + 
+  geom_...()
+```
 
- 
+**Options**
+
+a. 
+```{r}
+ggplot(mtcars) + 
+  aes(x = mpg , y = wt) + 
+  geom_point()
+```
+
+b. 
+```{r}
+ggplot(mtcars) + 
+  aes(x = wt , y = cyl) + 
+  geom_point()
+```
+
+c. 
+```{r}
+ggplot(mtcars) + 
+  aes(x = mpg, y = wt) + 
+  geom_scatter()
+```
+
+d. 
+```{r}
+ggplot(mtcars) + 
+  aes(x = wt , y = cyl) + 
+  geom_scatter()
+```
