@@ -163,7 +163,7 @@ ggplot(bechdel,
 
 Note that the result is exactly the same.
 
--   The `geom_xx` function specifies the type of plot we want to use to represent the data. In the code below, we use `geom_point` which creates a plot where each observation is represented by a point.
+-   The `geom_xx` function specifies the type of plot we want to use to represent the data. In the code below, we want to use `geom_point`, which creates a plot where each observation is represented by a point.
 
 ```{webr-r}
 #| label: plot-point
