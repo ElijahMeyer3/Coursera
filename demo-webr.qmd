@@ -3,7 +3,6 @@ title: "NEW CHANGE"
 author: ""
 format: html
 toc: true
-self-contained: true
 editor: visual
 markdown: 
   wrap: sentence
@@ -33,7 +32,7 @@ download.file(
 )
 ```
 
-```{r}
+```{webr-r}
 #| echo: false
 #| context: setup
 
@@ -43,7 +42,7 @@ download.file(
 )
 ```
 
-```{r}
+```{webr-r}
 #| echo: false
 bechdel <- read.csv("bechdel.csv")
 ```
@@ -56,7 +55,7 @@ This analysis is about the [Bechdel test](https://en.wikipedia.org/wiki/Bechdel_
 
 We'll use: **tidyverse** for majority of the analysis and **scales** for pretty plot labels later on. These are ready to use for you in this activity!
 
-```{r}
+```{webr-r}
 #| label: load-packages
 #| message: false
 #| warning: false
@@ -174,7 +173,7 @@ ggplot(bechdel,
 ::: {.callout-tip collapse="true"}
 ## Expected Result
 
-```{r}
+```{webr-r}
 #| echo: false
 library(ggplot2)
 ggplot(bechdel, 
@@ -223,6 +222,7 @@ ggplot(bechdel,
 
 ```{r}
 #| label: plot-labels
+#| echo: false
 
 ggplot(bechdel, 
        aes(x = budget_2013, y = gross_2013))+
@@ -263,7 +263,7 @@ ggplot(bechdel,
 ::: {.callout-tip collapse="true"}
 ## Expected Result
 
-```{r}
+```{webr-r}
 #| label: plot-aes-color-solution
 
 ggplot(bechdel, 
@@ -381,30 +381,27 @@ This was not a useful update as one of the levels of `clean_test` maps directly 
 
 ## Assessment Questions
 
-**1.**  The gg in the name of the package ggplot2 stands for ...
+**1.** The gg in the name of the package ggplot2 stands for ...
 
 **Options**
 
-a. Grammar of Graphics 
+a.  Grammar of Graphics
 
-b. Grammar of Graphing 
+b.  Grammar of Graphing
 
-c. Good Grammar 
+c.  Good Grammar
 
-d. Generate Graphics  
+d.  Generate Graphics
 
+**2.** Please answer each *true or false question* below as it relates to the functionality.
 
-**2.**  Please answer each *true or false question* below as it relates to the functionality.
+a.  The `<-` assigns the value of the result from the operation on the right hand side to the object on the left hand side
 
+b.  `geom_jitter` and `geom_point` will produce the same scatter plot.
 
-a. The `<-` assigns the value of the result from the operation on the right hand side to the object on the left hand side 
+c.  `aes` can be nested within `ggplot` or specific geom functions (ex. `geom_line`)
 
-b. `geom_jitter` and `geom_point` will produce the same scatter plot. 
-
-c. `aes` can be nested within `ggplot` or specific geom functions (ex. `geom_line`)  
-
-
-**3.**  Connect the set of variables with a geom that will create an appropriate visualization.
+**3.** Connect the set of variables with a geom that will create an appropriate visualization.
 
 ::: columns
 ::: {.column width="70%"}
@@ -443,38 +440,40 @@ The next two questions will use the `mtcars` data set in R. A key to the data se
 | am       | Transmission (0 = automatic, 1 = manual) |
 | gear     | Number of forward gears                  |
 
-**4.**  Code style: Below is code that does not follow the [Tidyverse style guide](https://style.tidyverse.org/). Pick the correction option that changes the code to adhere to the style guide.
+**4.** Code style: Below is code that does not follow the [Tidyverse style guide](https://style.tidyverse.org/). Pick the correction option that changes the code to adhere to the style guide.
 
-```{r}
+```{webr-r}
 ggplot(data=mpg,mapping=aes(x=drv,fill=class))+geom_bar() +scale_fill_viridis_d()
 ```
 
 **Options**
 
-a. 
-```{r}
+a.  
+
+```{webr-r}
 ggplot(mpg, aes(x = drv, fill = class)) + 
   geom_bar() + 
   scale_fill_viridis_d()
 ```
 
-b. 
-```{r}
+b.  
+
+```{webr-r}
 ggplot(data=mpg, aes(x = drv, fill = class)) + 
   geom_bar() + scale_fill_viridis_d()
 ```
 
-c. 
-```{r}
+c.  
+
+```{webr-r}
 ggplot(mpg, aes(x = drv, fill = class))+ 
 geom_bar()+ 
 scale_fill_viridis_d()
 ```
 
+**5.** Reference the help file of the `mtcars` data set. Then, choose the selection that fill in the following `...` to make a scatterplot of cars' `miles per gallon` on the x-axis and their \`weight below.
 
-**5.**  Reference the help file of the `mtcars` data set. Then, choose the selection that fill in the following `...` to make a scatterplot of cars' `miles per gallon` on the x-axis and their `weight below.
-
-```{r}
+```{webr-r}
 ggplot(mtcars) + 
   aes(x = ... , y = ...) + 
   geom_...()
@@ -482,29 +481,33 @@ ggplot(mtcars) +
 
 **Options**
 
-a. 
-```{r}
+a.  
+
+```{webr-r}
 ggplot(mtcars) + 
   aes(x = mpg , y = wt) + 
   geom_point()
 ```
 
-b. 
-```{r}
+b.  
+
+```{webr-r}
 ggplot(mtcars) + 
   aes(x = wt , y = cyl) + 
   geom_point()
 ```
 
-c. 
-```{r}
+c.  
+
+```{webr-r}
 ggplot(mtcars) + 
   aes(x = mpg, y = wt) + 
   geom_scatter()
 ```
 
-d. 
-```{r}
+d.  
+
+```{webr-r}
 ggplot(mtcars) + 
   aes(x = wt , y = cyl) + 
   geom_scatter()
